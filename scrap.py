@@ -17,6 +17,7 @@ def scrap():
             page = json_data.get('metadata').get('page') + 1
     except:
         json_data["metadata"]=params
+        json_data["data"]=[]
         json.dump(json_data, open('annapurna_post.json', 'w'), indent=4)
         title = json_data.get('metadata').get('title')
         page = json_data.get('metadata').get('page') + 1
@@ -25,11 +26,15 @@ def scrap():
         try:
             params['page']=page
             params['title']=title
+            json_each_page = {}
             res = requests.get(url, params=params)
             data = res.json()
             if (res.status_code == 200 ):
                 json_data["metadata"]['page'] = params['page']
-                json_data[page] = data['data']['items']
+                json_each_page["current_page"] = params["page"]
+                json_each_page["article"] = data["data"]["items"]
+                json_each_page["title"] = params["title"]
+                json_data["data"].append(json_each_page)
                 json.dump(json_data, open('annapurna_post.json', 'w'), indent=4)
                 print("Page:", page, 'success')
                 page = page + 1
@@ -40,4 +45,3 @@ def scrap():
 if __name__ == '__main__':
     scrap()
     print("Scraping complete")
-
