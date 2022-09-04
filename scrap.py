@@ -3,7 +3,7 @@ from encodings import utf_8
 import requests
 import json
 
-def scrapping():
+def scrap():
     json_data = {}
     params = {
                 'page': 0,
@@ -38,6 +38,6 @@ def scrapping():
             print(e)
 
 if __name__ == '__main__':
-    scrapping()
+    scrap()
     print("Scraping complete")
 
